@@ -44,9 +44,23 @@ app.get('/blogs', (req, res) => {
       res.render('index', { blogs: blogs });
     }
   });
-  res.render('index');
 });
-
+// New route
+app.get('/blogs/new', (req, res) => {
+  res.render('new');
+});
+// Create route
+app.post('/blogs', (req, res) => {
+  // create blog
+  Blog.create(req.body.blogs, (err, newBlog) => {
+    if (err) {
+      res.render('new');
+    } else {
+      // run redirect
+      res.redirect('/blogs');
+    }
+  });
+});
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
